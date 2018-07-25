@@ -129,13 +129,51 @@ let urls = [
     '/uk/novostroyki-kiev-rayon-goloseevskii-kvartiry',
     '/uk/novostroyki-kiev-ulitsa-boiko-kvartiry',
     '/uk/novostroyki-kiev-metro-nivki-kvartiry'
- ];
-let regExpUrl = new RegExp('^\/(ru|uk)(?:\/novostroyki)(?:-(vinnitskaya|zhitomirskaya|ternopolskaya|khmelnitskaya|lvovskaya|chernigovskaya|kharkovskaya|sumskaya|rovenskaya|kiyevskaya|dnepropetrovskaya|odesskaya|zaporozhskaya|ivano-frankovskaya|kirovogradskaya|volynskaya|nikolayevskaya|poltavskaya|zakarpatskaya|khersonskaya|cherkasskaya|chernovitskaya|donetskaya|luganskaya)-(?:oblast))?');
+    ],
+    language = '\/(ru|uk)',
+    novostroyki = '(?:\/novostroyki)',
+    oblast = '(?:-(vinnitskaya|zhitomirskaya|ternopolskaya|khmelnitskaya|lvovskaya|chernigovskaya|kharkovskaya|sumskaya|rovenskaya|kiyevskaya|dnepropetrovskaya|odesskaya|zaporozhskaya|ivano-frankovskaya|kirovogradskaya|volynskaya|nikolayevskaya|poltavskaya|zakarpatskaya|khersonskaya|cherkasskaya|chernovitskaya|donetskaya|luganskaya)-(?:oblast))?',
+/**
+ * ToDo @param settlement fix if settlement = krivoy-rog or nova-kahovka
+ */
+    settlement = '(?:[-]{1})?((?!s-remontom|ekonom-klassa|standart|biznes-klassa|elit-klassa|dachnyy|komfort-klassa|premium|kvartiry|kottedzhi|taunkhausy|pomeshcheniya|rassrochka|stroyashchiyesya|sdannyye|odnokomnatnyye|dvukhkomnatnyye|trekhkomnatnyye|chetyrekhkomnatnyye)[a-z]*(?=[-]?)[a-z]*)?',
+    region = '(?:[-]{1})?(?:(?:rayon-)([a-z]+))?',
+    subway = '(?:[-]{1})?(?:(?:metro-)([a-z]+))?',
+    shoreArea = '(?:[-]{1})?(levyy-bereg|pravyy-bereg)?',
+    nearSubway = '(?:[-]{1})?(vozle-metro)?',
+    street = '(?:(?:-ulitsa-)([a-z]+))?',
+    leased = '(?:[-]{1})?(sdannyye)?',
+    underConstraction = '(?:[-]{1})?(stroyashchiyesya)?',
+    realty = '(?:[-]{1})?(kvartiry|kottedzhi|taunkhausy|pomeshcheniya)?',
+    classEstate = '(?:[-]{1})?(ekonom-klassa|standart|biznes-klassa|elit-klassa|dachnyy|komfort-klassa|premium)?',
+    apartments = '(?:[-]{1})?(odnokomnatnyye|dvukhkomnatnyye|trekhkomnatnyye|chetyrekhkomnatnyye)?',
+    payment = '(?:[-]{1})?(rassrochka)?',
+    refit = '(?:[-]{1})?(s-remontom)?',
+    regExpUrl = new RegExp('^'+language+novostroyki+oblast+settlement+region+subway+shoreArea+nearSubway+street+leased+underConstraction+realty+classEstate+apartments+payment+refit);
 
-function testUrls (urls, regExpUrl) {
-	urls.map(function(str){
-		console.log(str.match(regExpUrl));
-	});
-};
+(testUrls=() =>{
+    for (let i = 0; i < urls.length; i++) {
+        console.log(regExpUrl.exec(urls[i]));
+    }
+})();
 
-testUrls(urls, regExpUrl);
+// console.log('My regexp: ', regExpUrl);
+ 
+/*
+ * MY RegExp online => https://regex101.com/r/nBxZGQ/2
+ * Group 1 => language
+ * Group 2 => oblast
+ * Group 3 => settlement
+ * Group 4 => region
+ * Group 5 => subway
+ * Group 6 => shoreArea
+ * Group 7 => nearSubway
+ * Group 8 => street
+ * Group 9 => leased
+ * Group 10 => underConstraction
+ * Group 11 => realty
+ * Group 12 => classEstate
+ * Group 13 => apartments
+ * Group 14 => payment
+ * Group 15 => refit
+ */
